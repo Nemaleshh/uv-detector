@@ -2,13 +2,9 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Fix apt-get and install dependencies with retry logic
-RUN apt-get update -qq || apt-get update -qq || apt-get update -qq && \
+# Fix apt-get and install dependencies
+RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    libsm6 \
-    libxext6 \
-    libxrender-dev \
-    libgl1-mesa-glx \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 

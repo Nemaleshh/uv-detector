@@ -2,13 +2,9 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Fix apt-get issues and install dependencies with better error handling
-RUN apt-get update -qq && \
+# Fix apt-get issues and install dependencies
+RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    libsm6 \
-    libxext6 \
-    libxrender-dev \
-    libgl1-mesa-glx \
     ca-certificates \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

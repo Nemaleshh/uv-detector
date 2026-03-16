@@ -199,3 +199,37 @@ def delete_vehicle(win_number):
     
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@api.route('/start-ip-camera', methods=['POST'])
+def start_ip_camera():
+    """
+    Start IP camera streaming (backend processes)
+    Request body: {
+        "camera_url": "http://192.168.x.x:8080/video",
+        "vehicle_id": "VIN123",
+        "interval": 5
+    }
+    """
+    try:
+        data = request.get_json()
+        camera_url = data.get('camera_url')
+        vehicle_id = data.get('vehicle_id')
+        interval = data.get('interval', 5)
+        
+        if not camera_url or not vehicle_id:
+            return jsonify({'error': 'camera_url and vehicle_id required'}), 400
+        
+        # Register vehicle first
+        vehicle = Vehicle(vehicle_id)
+        vehicles[vehicle_id] = vehicle
+        
+        return jsonify({
+            'message': 'IP Camera stream configured',
+            'instructions': f'Run: python ip_camera_stream.py --camera-url "{camera_url}" --vehicle-id "{vehicle_id}" --interval {interval}',
+            'camera_url': camera_url,
+            'vehicle_id': vehicle_id,
+            'interval': interval
+        }), 200
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500

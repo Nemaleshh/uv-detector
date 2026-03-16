@@ -1,0 +1,15 @@
+Flask==3.0.0
+Flask-CORS==4.0.0
+opencv-python-headless==4.8.1.78
+numpy==1.24.3
+Werkzeug==3.0.1
+
+# For production (Render) - optimized for free tier
+gunicorn==21.2.0
+python-dotenv==1.0.0
+
+# Database
+SQLite3  # Built-in, or PostgreSQL if upgrading
+
+# Optional: For cloud storage of images
+boto3==1.28.0  # AWS S3 backup for free tier

@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: uv-oil-leak-detection
+    runtime: python311
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:5000 --workers 1 --timeout 120 --max-requests 500 app:create_app()
+    
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: RENDER_FREE_TIER
+        value: "true"
